@@ -25,21 +25,42 @@ namespace ConsoleApplication1
                     Console.Write("\nAdd meg a kellő paramétereket space-el tagolva (guminyomás, személyek, súly, kuplung, tank, ccm3): "); //konstruktor sorrendje
                     string[] s = Console.ReadLine().Split(' ');
 
-                    seged = new motor(double.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]), s[3], int.Parse(s[4]), int.Parse(s[5]));
+                    // Applyed the try block to avoid InternalErrors. //////////////////////////////////////////////////////////////////////////////////////////////
+                    try { seged = new motor(double.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]), s[3], int.Parse(s[4]), int.Parse(s[5])); }                      //
+                    catch (FormatException)                                                                                                                       //  
+                    {                                                                                                                                             //      
+                        Console.WriteLine("Hibás bemeneti paraméterek.");                                                                                         //  
+                        continue;                                                                                                                                 //  
+                    }                                                                                                                                             //  
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 }
                 if (tipus == "b")
                 {
                     Console.Write("\nAdd meg a kellő paramétereket space-el tagolva (guminyomás, személyek, súly, pedálmárka): ");
                     string[] s = Console.ReadLine().Split(' ');
 
-                    seged = new bicikli(double.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]), s[3]);
+                    // Applyed the try block to avoid InternalErrors. //////////////////////////////////////////////////////////////////////////////////////////////
+                    try { seged = new bicikli(double.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]), s[3]); }                                                      //
+                    catch (FormatException)                                                                                                                       //
+                    {                                                                                                                                             //
+                        Console.WriteLine("Hibás bemeneti paraméterek.");                                                                                         //
+                        continue;                                                                                                                                 //    
+                    }                                                                                                                                             //  
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 }
                 if (tipus == "moped")
                 {
                     Console.Write("\nAdd meg a kellő paramétereket space-el tagolva (guminyomás, személyek, súly, akkumulátor (MAh)): ");
                     string[] s = Console.ReadLine().Split(' ');
 
-                    seged = new moped(double.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]), int.Parse(s[3]));
+                    // Applyed the try block to avoid InternalErrors. //////////////////////////////////////////////////////////////////////////////////////////////
+                    try { seged = new moped(double.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]), int.Parse(s[3])); }                                             //
+                    catch (FormatException)                                                                                                                       //  
+                    {                                                                                                                                             //
+                        Console.WriteLine("Hibás bemeneti paraméterek.");                                                                                         //      
+                        continue;                                                                                                                                 //  
+                    }                                                                                                                                             //      
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 }
 
                 if (tipus == "b" || tipus == "m" || tipus == "moped") //nem adja hozzá a null-t
@@ -58,37 +79,32 @@ namespace ConsoleApplication1
             {
                 //var proba = garazs[0].GetType(); megnéztük mit csinál a GetType()
 
-                foreach (var item in garazs) //vagy elseif, vagy continue
+                foreach (ketkerekuek item in garazs) //vagy elseif, vagy continue
                 {
                     if (item.GetType().Name == "motor")
                     {
-                        motor s = item;
-
+                        motor s = (motor)item; //Explicit type conversation, to force the item, to have the motor type, in order to teach the motor's individual elements of data.
                         Console.WriteLine("Motor: ");
-                        Console.WriteLine("\tGuminyomás: " + item.Guminyomas);
-                        Console.WriteLine("\tSzemélyek: " + item.Szemelyek);
-                        Console.WriteLine("\tSúly: " + item.Suly);
-                        Console.WriteLine();
-
-                        Console.WriteLine("\tKuplunk: ");
-
+                        Console.WriteLine("\tGuminyomás: " + s.Guminyomas);
+                        Console.WriteLine("\tSzemélyek: " + s.Szemelyek);
+                        Console.WriteLine("\tSúly: " + s.Suly);
+                        Console.WriteLine("\tKuplunk: " + s.Kuplung); // Here we can reach the data of the motor.
+                        Console.WriteLine("\tTank: " + s.Tank);       // Here we can reach the data of the motor.
+                        Console.WriteLine("\tccm^3: " + s.Tank);      // Here we can reach the data of the motor.
                         continue;
                     }
 
                     if (item.GetType().Name == "moped")
                     {
-
+                        // TODO
                     }
-
 
                     else if (item.GetType().Name == "bicikli")
                     {
-
+                        // TODO
                     }
                 }
             }
-
-
             Console.ReadKey();
         }
     }
